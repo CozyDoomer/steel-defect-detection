@@ -16,7 +16,7 @@ if 1:
     COMMON_STRING += '\tset random seed\n'
     COMMON_STRING += '\t\tSEED = %d\n'%SEED
 
-    torch.backends.cudnn.benchmark     = True  ##uses the inbuilt cudnn auto-tuner to find the fastest convolution algorithms. -
+    torch.backends.cudnn.benchmark     = False  ##uses the inbuilt cudnn auto-tuner to find the fastest convolution algorithms. -
     torch.backends.cudnn.enabled       = True
     torch.backends.cudnn.deterministic = True
 
