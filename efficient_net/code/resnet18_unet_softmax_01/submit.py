@@ -90,19 +90,7 @@ def compute_metric(truth, predict):
 ###################################################################################
 
 
-def do_evaluate(net, test_dataset, augment=[], out_dir=None):
-
-    test_loader = DataLoader(
-            test_dataset,
-            sampler     = SequentialSampler(test_dataset),
-            batch_size  = 8,
-            drop_last   = False,
-            num_workers = 0,
-            pin_memory  = True,
-            collate_fn  = null_collate
-    )
-    #----
-
+def do_evaluate(net, test_dataloader, augment=[], out_dir=None):
     #def sharpen(p,t=0):
     def sharpen(p,t=0):
         if t!=0:
@@ -284,6 +272,16 @@ def run_submit():
             augment = None, #
         )
 
+    test_loader = DataLoader(
+                test_dataset,
+                sampler     = SequentialSampler(test_dataset),
+                batch_size  = 8,
+                drop_last   = False,
+                num_workers = 0,
+                pin_memory  = True,
+                collate_fn  = null_collate
+        )
+
     log.write('test_dataset : \n%s\n'%(test_dataset))
     log.write('\n')
     #exit(0)
@@ -303,8 +301,8 @@ def run_submit():
     # test_id, test_image, test_probability_label, test_truth_mask, test_truth_label
 
     image_id, probability, probability_label, probability_mask, truth_label, truth_mask =\
-        do_evaluate(net, test_dataset, augment)
-        #do_evaluate(net, test_dataset, [])
+        do_evaluate(net, test_loader, augment)
+        #do_evaluate(net, test_loader, [])
 
     # if 0:
     #     # save for ensembling

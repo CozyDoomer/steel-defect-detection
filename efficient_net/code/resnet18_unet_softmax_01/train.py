@@ -94,7 +94,7 @@ def do_valid(net, valid_loader, out_dir=None):
         truth_label = truth_label.cuda()
 
         with torch.no_grad():
-            logit = data_parallel(net, input)  #net(input)
+            logit = net(input)
             loss  = criterion(logit, truth_mask)
             tn,tp, num_neg,num_pos = metric_hit(logit, truth_mask)
             dn,dp, num_neg,num_pos = metric_dice(logit, truth_mask, threshold=0.5, sum_threshold=100)
@@ -132,19 +132,12 @@ def do_valid(net, valid_loader, out_dir=None):
 
 
 
-def run_train(lr=0.01, num_iters=300000):
-
-    out_dir = \
-         '/run/media/windisk/Users/chrun/Documents/Projects/steel-defect-detetion/efficient_net/data/result/resnet18-seg-full-softmax-foldb1-1-4balance'
-
-    initial_checkpoint = \
-         '/run/media/windisk/Users/chrun/Documents/Projects/steel-defect-detetion/efficient_net/data/result/resnet18-seg-full-softmax-foldb1-1-4balance/checkpoint/00114000_model.pth'
-
+def run_train(initial_checkpoint, out_dir, lr=0.01, num_iters=300000):
     batch_size =  8 
     iter_accum =  4
 
     loss_weight = None #[5,5,2,5] 
-    train_sampler = FourBalanceClassSampler #RandomSampler
+    train_sampler = RandomSampler #FourBalanceClassSampler 
 
 
     ## setup  -----------------------------------------------------------------------------
@@ -315,7 +308,7 @@ def run_train(lr=0.01, num_iters=300000):
             truth_label = truth_label.cuda()
             truth_mask  = truth_mask.cuda()
 
-            logit = data_parallel(net,input)  #net(input)
+            logit = net(input)
             loss = criterion(logit, truth_mask, loss_weight)
             tn,tp, num_neg,num_pos = metric_hit(logit, truth_mask)
 
@@ -372,5 +365,8 @@ def run_train(lr=0.01, num_iters=300000):
 if __name__ == '__main__':
     print( '%s: calling main function ... ' % os.path.basename(__file__))
 
-    num_iters   = 250*1000
-    run_train(lr=0.01, num_iters=num_iters)
+    initial_checkpoint = '/run/media/windisk/Users/chrun/Documents/Projects/steel-defect-detetion/efficient_net/data/result/resnet18-seg-full-softmax-foldb1-1-4balance/checkpoint/00142000_model.pth'
+    out_dir = '/run/media/windisk/Users/chrun/Documents/Projects/steel-defect-detetion/efficient_net/data/result/resnet18-seg-full-softmax-foldb1-1-4balance'
+    
+    num_iters = 150*1000
+    run_train(initial_checkpoint, out_dir, lr=0.002, num_iters=num_iters)
