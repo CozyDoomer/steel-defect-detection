@@ -18,6 +18,7 @@ executors:
     trace: trace.pth
     grid:
       - - encoder: resnet34
+          batch_size: 28
         - encoder: se_resnext50_32x4d
           batch_size: 16
         - model_params:
