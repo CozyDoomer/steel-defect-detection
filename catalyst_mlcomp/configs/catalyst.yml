@@ -12,7 +12,7 @@ stages:
 
   data_params:
     num_workers: 8
-    batch_size: 28
+    batch_size: 30
     per_gpu_scaling: True
     img_folder: 'data/input/train_images/'
     mask_folder: 'data/train_masks/'
@@ -25,7 +25,7 @@ stages:
 
   criterion_params:
     criterion: BCEDiceLoss
-
+    
   callbacks_params:
     loss:
       callback: CriterionCallback
@@ -38,7 +38,7 @@ stages:
 
   stage1:
     state_params:
-      num_epochs: 360
+      num_epochs: 250
 
     optimizer_params:
       optimizer: Adam
