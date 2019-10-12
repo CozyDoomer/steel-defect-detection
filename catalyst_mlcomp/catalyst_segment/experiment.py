@@ -13,10 +13,15 @@ class Experiment(ConfigExperiment):
     def prepare_train_transforms(aug=None):
         transforms = [
             A.HorizontalFlip(),
-            A.VerticalFlip(),
+            #new
+            A.ShiftScaleRotate(),
+            A.ElasticTransform(),
+            A.GridDistortion(),
+            A.RandomBrightnessContrast(brightness_limit=0.3)
+            #A.VerticalFlip(),
             #A.RandomResizedCrop(256, 1600, scale=(0.9, 1.0), ratio=(0.9, 1.1)),
-            A.GaussNoise(),
-            A.Cutout()
+            #A.GaussNoise(),
+            #A.Cutout()
         ]
 
         if aug:

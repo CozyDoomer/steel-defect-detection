@@ -38,13 +38,13 @@ stages:
 
   stage1:
     state_params:
-      num_epochs: 250
+      num_epochs: 300
 
     optimizer_params:
       optimizer: Adam
-      lr: 0.001
+      lr: 0.0015
       layerwise_params:
         model.encoder*:
           lr: 0.00001
         model.decoder*:
-          lr: 0.001
+          lr: 0.0015
