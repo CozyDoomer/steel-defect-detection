@@ -6,7 +6,7 @@ from mlcomp.worker.executors import Executor
 @Executor.register
 class Preprocess(Executor):
     def work(self):
-        df = pd.read_csv('data/input/train.csv')
+        df = pd.read_csv('data/input/train_pseudolabel.csv')
         df['exists'] = df['EncodedPixels'].notnull().astype(int)
 
         df['image_name'] = df['ImageId_ClassId'].map(
@@ -19,7 +19,7 @@ class Preprocess(Executor):
             row.class_id if row.exists else 0 for row in df.itertuples()
         ]
         df['fold'] = stratified_group_k_fold(
-            label='class_id', group_column='image_name', df=df, n_splits=5
+            label='class_id', group_column='image_name', df=df, n_splits=5, seed=21
         )
         df.to_csv('data/fold.csv', index=False)
 

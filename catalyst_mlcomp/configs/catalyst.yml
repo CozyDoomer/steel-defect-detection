@@ -12,9 +12,9 @@ stages:
 
   data_params:
     num_workers: 8
-    batch_size: 30
+    batch_size: 28
     per_gpu_scaling: True
-    img_folder: 'data/input/train_images/'
+    img_folder: 'data/input/train_pseudolabel_images/'
     mask_folder: 'data/train_masks/'
     fold_csv: 'data/masks.csv'
     fold_number: 0
@@ -33,18 +33,21 @@ stages:
       callback: OptimizerCallback
     saver:
       callback: CheckpointCallback
+      #resume: 'models/resnet50_weight.pth'
     dice:
       callback: DiceCallback
 
   stage1:
+  
     state_params:
       num_epochs: 300
 
     optimizer_params:
       optimizer: Adam
-      lr: 0.0015
+      lr: 0.001
+      weight_decay: 0.0001
       layerwise_params:
         model.encoder*:
           lr: 0.00001
         model.decoder*:
-          lr: 0.0015
+          lr: 0.001

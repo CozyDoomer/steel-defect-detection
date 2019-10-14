@@ -14,13 +14,16 @@ class Experiment(ConfigExperiment):
         transforms = [
             A.HorizontalFlip(),
             #new
-            A.ShiftScaleRotate(),
-            A.ElasticTransform(),
-            A.GridDistortion(),
-            A.RandomBrightnessContrast(brightness_limit=0.3)
+            #A.ShiftScaleRotate(shift_limit=0.0500, scale_limit=0.05, rotate_limit=6),
+            #A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.05, rotate_limit=10, p=.75),
+            A.RandomBrightnessContrast(brightness_limit=0.15, contrast_limit=0.15, p=.75),
+            #A.OneOf([
+            #    A.ElasticTransform(),
+            #    A.GridDistortion()
+            #]),
             #A.VerticalFlip(),
             #A.RandomResizedCrop(256, 1600, scale=(0.9, 1.0), ratio=(0.9, 1.1)),
-            #A.GaussNoise(),
+            A.GaussNoise(var_limit=(10, 20)),
             #A.Cutout()
         ]
 
