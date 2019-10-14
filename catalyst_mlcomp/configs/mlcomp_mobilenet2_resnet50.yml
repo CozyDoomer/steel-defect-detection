@@ -18,7 +18,7 @@ executors:
     trace: trace.pth
     grid:
       - - encoder: se_resnext50_32x4d
-          batch_size: 24
+          batch_size: 20
         - model_params:
             model: MobileUnet
             input_size: 256
@@ -26,5 +26,5 @@ executors:
             num_classes: 4
             layerwise_params: {}
         - encoder: resnet50
-          batch_size: 22
+          batch_size: 24
         
