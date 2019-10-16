@@ -25,19 +25,27 @@ stages:
 
   criterion_params:
     criterion: BCEDiceLoss
-    
-  callbacks_params:
-    loss:
-      callback: CriterionCallback
-    optimizer:
-      callback: OptimizerCallback
-    saver:
-      callback: CheckpointCallback
-      #resume: 'models/resnet50_weight.pth'
-    dice:
-      callback: DiceCallback
 
-  stage1:
+  stage1:      
+    scheduler_params:
+      scheduler: OneCycleLR
+      num_steps: 240
+      warmup_steps: 20
+      lr_range: [0.0015, 0.00008]
+      momentum_range: [0.85, 0.95]
+    
+    callbacks_params:
+      loss:
+        callback: CriterionCallback
+      optimizer:
+        callback: OptimizerCallback
+      saver:
+        callback: CheckpointCallback
+        #resume: 'models/resnet50_weight.pth'
+      dice:
+        callback: DiceCallback
+      scheduler:
+        callback: SchedulerCallback
   
     state_params:
       num_epochs: 300
