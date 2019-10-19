@@ -29,12 +29,12 @@ stages:
   stage1:      
     scheduler_params:
       scheduler: OneCycleLR
-      num_steps: 300
-      warmup_steps: 100
-      #init_lr: 0.00004
-      #lr_range: [0.001, 0.00004]
-      init_lr: 0.00008
-      lr_range: [0.002, 0.00008]
+      num_steps: 200
+      warmup_steps: 70
+      init_lr: 0.00004
+      lr_range: [0.001, 0.00004]
+      #init_lr: 0.00008
+      #lr_range: [0.002, 0.00008]
       momentum_range: [0.85, 0.95]
     
     callbacks_params:

@@ -190,10 +190,16 @@ def train_augment(image, mask, infor):
     if u==0:
         pass
     elif u==1:
-        image, mask = do_random_crop_rescale(image, mask, 1600-(256-224), 224)
+        image, mask = do_random_crop_rescale(image,mask,1600-(256-180),180)
+        #image, mask = do_random_crop_rescale(image, mask, 1600-(256-224), 224)
     elif u==2:
         image, mask = do_random_crop_rotate_rescale(image, mask, 1600-(256-224), 224)
 
+    #image, mask = do_random_crop(image, mask, 400,256)
+    
+    #if np.random.rand()>0.25:
+    #     image, mask = do_random_cutout(image, mask)
+            
     if np.random.rand()>0.5:
         image = do_random_log_contast(image)
 
