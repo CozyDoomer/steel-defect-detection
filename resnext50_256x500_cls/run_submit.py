@@ -263,13 +263,6 @@ def run_submit_classifcation(
         log.write('\n%s'%(text))
 
 
-
-
-
-
-
-
-
     ##################
 
     if mode =='test':

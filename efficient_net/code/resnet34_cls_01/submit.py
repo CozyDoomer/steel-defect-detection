@@ -371,9 +371,6 @@ def run_submit():
 
 
 
-    ###################
-
-
     if mode =='test':
         log.write('test submission .... @ %s\n'%str(augment))
         csv_file = out_dir +'/submit/%s/resnet34-cls-tta-0.50.csv'%(mode)
